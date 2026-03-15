@@ -1,29 +1,30 @@
 /**
- * CLOUDFLARE WORKER - TODO BACKEND
- * This runs on Cloudflare's servers and handles all todo operations
+ * CLOUDFLARE WORKER - TODO APP (Backend + Frontend)
  */
+
+// Import the HTML file
+import html from '../public/index.html';
 
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const method = request.method;
 
-    // CORS headers - allows frontend to talk to this backend
+    // CORS headers
     const corsHeaders = {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET, POST, DELETE, OPTIONS, PATCH",
       "Access-Control-Allow-Headers": "Content-Type",
     };
 
-    // Handle preflight requests (browsers send this automatically)
+    // Handle preflight requests
     if (method === "OPTIONS") {
       return new Response(null, { headers: corsHeaders });
     }
 
-    // Database setup - using Cloudflare D1
     const db = env.DB;
 
-    // Initialize database on first run
+    // Initialize database
     try {
       await db.prepare(
         "CREATE TABLE IF NOT EXISTS todos (id INTEGER PRIMARY KEY, title TEXT NOT NULL, completed INTEGER DEFAULT 0, created_at DATETIME DEFAULT CURRENT_TIMESTAMP)"
@@ -32,7 +33,7 @@ export default {
       console.log("Table might already exist");
     }
 
-    // ROUTE 1: GET /api/todos - Get all todos
+    // API ROUTES
     if (url.pathname === "/api/todos" && method === "GET") {
       const result = await db.prepare("SELECT * FROM todos ORDER BY created_at DESC").all();
       return new Response(JSON.stringify(result.results || []), {
@@ -40,7 +41,6 @@ export default {
       });
     }
 
-    // ROUTE 2: POST /api/todos - Add a new todo
     if (url.pathname === "/api/todos" && method === "POST") {
       const body = await request.json();
       const title = body.title?.trim();
@@ -63,7 +63,6 @@ export default {
       });
     }
 
-    // ROUTE 3: DELETE /api/todos/:id - Delete a todo
     if (url.pathname.startsWith("/api/todos/") && method === "DELETE") {
       const id = url.pathname.split("/").pop();
       
@@ -74,7 +73,6 @@ export default {
       });
     }
 
-    // ROUTE 4: PATCH /api/todos/:id - Toggle todo completion
     if (url.pathname.startsWith("/api/todos/") && method === "PATCH") {
       const id = url.pathname.split("/").pop();
       const body = await request.json();
@@ -90,10 +88,11 @@ export default {
       });
     }
 
-    // If no route matches, return 404
-    return new Response(JSON.stringify({ error: "Not found" }), {
-      status: 404,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    // SERVE FRONTEND HTML FOR ALL OTHER PATHS
+    return new Response(html, {
+      headers: {
+        "Content-Type": "text/html; charset=UTF-8",
+      },
     });
   },
 };
