@@ -1,0 +1,22 @@
+name = "todo-app"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "todos_db"
+database_id = "7a70db10-a23f-405e-955a-2a441890d261"
+
+[env.production]
+name = "todo"
+
+[build]
+command = "npm install"
+
+[[build.upload]]
+format = "service-worker"
+
+[[build.upload.rules]]
+type = "CompiledContentType"
+globs = ["**/*.html"]
+fallthrough = true
