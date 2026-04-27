@@ -1,0 +1,140 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f0f2f5;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+h1 {
+    color: #1a1a1a;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 32px;
+}
+
+.order-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-left: 6px solid #667eea;
+}
+
+.order-card.processed {
+    border-left-color: #2ecc71;
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.order-id {
+    font-weight: bold;
+    font-size: 18px;
+    color: #667eea;
+}
+
+.order-status {
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: #e0e0e0;
+}
+
+.status-pending { background: #ffeaa7; color: #d35400; }
+.status-processed { background: #55efc4; color: #00b894; }
+
+.order-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.detail-item {
+    margin-bottom: 8px;
+}
+
+.label {
+    font-size: 12px;
+    color: #777;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.value {
+    font-size: 15px;
+    color: #333;
+    font-weight: 500;
+}
+
+.admin-actions {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    gap: 15px;
+    align-items: flex-end;
+}
+
+.input-group {
+    flex: 1;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-top: 5px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background: #667eea;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #5568d3;
+}
+
+.btn-danger {
+    background: #ff7675;
+    color: white;
+    margin-top: 10px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 50px;
+    color: #999;
+    font-size: 18px;
+}
